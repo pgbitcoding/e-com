@@ -26,6 +26,65 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    
+    <!-- Login Page Styles -->
+    <style>
+        #popup-box {
+        
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+          }
+          
+          .popup-content {
+            background-color: #fff;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+          }
+          
+          .popup-header {
+            display: flex;
+            justify-content: space-between;
+          }
+          
+          .popup-header button {
+            padding: 5px 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+          }
+          
+          .popup-header button.active {
+            background-color: #ccc;
+          }
+          
+          .popup-forms form {
+            display: none;
+          }
+          
+          .popup-forms form.active {
+            display: block;
+          }
+
+        #cancel-cross {
+          font-size: 18px;
+          color: #999;
+          cursor: pointer;
+          float: right;
+        }
+
+        #cancel-cross:hover {
+          color: #333;
+        }
+
+    </style>
+        
 </head>
 
 <body>
@@ -91,7 +150,7 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
+                            <a href="#" id="login-link">Login</a>
                             <a href="#">Register</a>
                         </div>
                         <ul class="header__right__widget">
@@ -259,6 +318,36 @@
     </div>
     <!-- Search End -->
     
+    
+    <!-- Login Page Html -->
+    <div id="popup-box">
+        <div class="popup-content">
+          <div class="popup-header">
+            <button id="login-option" class="active">Login</button>
+            <button id="registration-option">Registration</button>
+            <span id="cancel-cross">&#10006;</span>
+          </div>
+          <div class="popup-forms">
+            <form id="login-form" class="active">
+              <!-- Login form fields -->
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password">
+              <button type="submit">Login</button>
+            </form>
+            <form id="registration-form">
+              <!-- Registration form fields -->
+              <label for="new-username">New Username:</label>
+              <input type="text" id="new-username" name="new-username">
+              <label for="new-password">New Password:</label>
+              <input type="password" id="new-password" name="new-password">
+              <button type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+    </div>
+
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -270,6 +359,35 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Login Page script -->
+    <script>
+        document.getElementById('login-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('popup-box').style.display = 'block';
+          });
+          
+          document.getElementById('login-option').addEventListener('click', function() {
+            document.getElementById('login-option').classList.add('active');
+            document.getElementById('registration-option').classList.remove('active');
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('registration-form').classList.remove('active');
+          });
+          
+          document.getElementById('registration-option').addEventListener('click', function() {
+            document.getElementById('registration-option').classList.add('active');
+            document.getElementById('login-option').classList.remove('active');
+            document.getElementById('registration-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+          });
+
+
+        document.getElementById('cancel-cross').addEventListener('click', function() {
+            document.getElementById('popup-box').style.display = 'none';
+          });
+  
+    </script>
+
 </body>
     
 </html>
