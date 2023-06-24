@@ -25,5 +25,6 @@ urlpatterns = [
     path("checkout",views.checkout,name="checkout"),
     path("product_details",views.product_details,name="product_details"),
     path("blog_details",views.blog_details,name="blog_details"),
+    path("blog",views.blog,name="blog"),
     
 ]
