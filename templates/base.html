@@ -26,6 +26,53 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    
+    <!-- Login Page Styles -->
+    <style>
+        #popup-box {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+          }
+          
+          .popup-content {
+            background-color: #fff;
+            width: 400px;
+            max-width: 90%;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          }
+          
+          #cancel-cross {
+            font-size: 18px;
+            cursor: pointer;
+            float: right;
+            margin-top: -10px;
+            margin-right: -10px;
+          }
+          
+          .popup-header {
+            margin-bottom: 20px;
+          }
+          
+          .popup-forms form {
+            display: none;
+          }
+          
+          .popup-forms form.active {
+            display: block;
+          }
+          
+        
+    </style>
+        
 </head>
 
 <body>
@@ -91,7 +138,7 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
+                            <a href="#" id="login-link">Login</a>
                             <a href="#">Register</a>
                         </div>
                         <ul class="header__right__widget">
@@ -259,6 +306,72 @@
     </div>
     <!-- Search End -->
     
+    
+    <!-- Login Page Html -->
+
+    <div id="popup-box">
+        <div class="popup-content p-4">
+            
+            <div class="popup-header d-flex justify-content-between align-items-center mb-4 ">
+                <button id="login-option" class="btn btn-outline-danger text-">Login</button>
+                <button id="registration-option" class="btn btn-outline-danger ">Registration</button>
+                <span id="cancel-cross" class="text-secondary">&#10006;</span>
+            </div>
+            
+            <div class="popup-forms">    
+                
+                <!-- Loign-form -->
+                <form id="login-form">
+                    <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Login</button>
+                </form>
+                
+                <!-- registration-form -->
+                <form id="registration-form" class="active">
+                    <div class="form-group">
+                        <label for="firstname">First Name:</label>
+                        <input type="text" id="firstname" name="firstname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" id="lastname" name="lastname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="address" id="address" name="address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile:</label>
+                        <input type="number" id="mobile" name="mobile" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="c_password">Reapeat Password:</label>
+                        <input type="c_password" id="c_password" name="c_password" class="form-control">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-danger">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -270,6 +383,34 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Login Page script -->
+    <script>
+        document.getElementById('login-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('popup-box').style.display = 'block';
+          });
+          
+          document.getElementById('login-option').addEventListener('click', function() {
+            document.getElementById('login-option').classList.add('active');
+            document.getElementById('registration-option').classList.remove('active');
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('registration-form').classList.remove('active');
+          });
+          
+          document.getElementById('registration-option').addEventListener('click', function() {
+            document.getElementById('registration-option').classList.add('active');
+            document.getElementById('login-option').classList.remove('active');
+            document.getElementById('registration-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+          });
+
+
+          document.getElementById('cancel-cross').addEventListener('click', function() {
+            document.getElementById('popup-box').style.display = 'none';
+          });
+    </script>
+
 </body>
     
 </html>
