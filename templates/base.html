@@ -49,7 +49,9 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
           }
-          
+          .error{
+            color: red;
+          }
           #cancel-cross {
             font-size: 18px;
             cursor: pointer;
@@ -139,7 +141,7 @@
                     <div class="header__right">
                         <div class="header__right__auth">
                             <a href="#" id="login-link">Login</a>
-                            <a href="#">Register</a>
+                            <a href="#" id="login-link">Register</a>
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
@@ -307,34 +309,47 @@
     <!-- Search End -->
     
     
-    <!-- Login Page Html -->
+    <!-- Login/Registration Page Html -->
 
-    <div id="popup-box">
+    <div id="popup-box" class="popup">
+      
         <div class="popup-content p-4">
             
+            {% if error_messages %}
+            <div class="error-container">
+                <ul class="error-list">
+                {% for error_message in error_messages %}
+                    <li class="error">{{ error_message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
             <div class="popup-header d-flex justify-content-between align-items-center mb-4 ">
                 <button id="login-option" class="btn btn-outline-danger text-">Login</button>
                 <button id="registration-option" class="btn btn-outline-danger ">Registration</button>
                 <span id="cancel-cross" class="text-secondary">&#10006;</span>
             </div>
-            
-            <div class="popup-forms">    
+
+            <div class="popup-forms" id="popup-forms">    
                 
-                <!-- Loign-form -->
-                <form id="login-form">
+                <!-- Login-form -->
+                
+
+                <form id="login-form" action={% url 'login'  %} method="POST"> {% csrf_token %}
                     <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" class="form-control">
+                    <input type="text" id="login_username" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" class="form-control">
+                    <input type="password" id="login_password" name="password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-danger">Login</button>
                 </form>
                 
                 <!-- registration-form -->
-                <form id="registration-form" class="active">
+                <form id="registration-form" action="{% url 'registration' %}" method="POST" class="active">{% csrf_token %}
                     <div class="form-group">
                         <label for="firstname">First Name:</label>
                         <input type="text" id="firstname" name="firstname" class="form-control">
@@ -344,6 +359,10 @@
                         <input type="text" id="lastname" name="lastname" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username" class="form-control">
                     </div>
@@ -351,6 +370,7 @@
                         <label for="address">Address:</label>
                         <input type="address" id="address" name="address" class="form-control">
                     </div>
+                        
                     <div class="form-group">
                         <label for="mobile">Mobile:</label>
                         <input type="number" id="mobile" name="mobile" class="form-control">
@@ -361,7 +381,7 @@
                     </div>
                     <div class="form-group">
                         <label for="c_password">Reapeat Password:</label>
-                        <input type="c_password" id="c_password" name="c_password" class="form-control">
+                        <input type="password" id="c_password" name="c_password" class="form-control">
                     </div>
 
 
@@ -389,27 +409,46 @@
         document.getElementById('login-link').addEventListener('click', function(event) {
             event.preventDefault();
             document.getElementById('popup-box').style.display = 'block';
-          });
-          
-          document.getElementById('login-option').addEventListener('click', function() {
+        });
+    
+        document.getElementById('login-option').addEventListener('click', function() {
             document.getElementById('login-option').classList.add('active');
             document.getElementById('registration-option').classList.remove('active');
             document.getElementById('login-form').classList.add('active');
             document.getElementById('registration-form').classList.remove('active');
-          });
-          
-          document.getElementById('registration-option').addEventListener('click', function() {
+        });
+    
+        document.getElementById('registration-option').addEventListener('click', function() {
             document.getElementById('registration-option').classList.add('active');
             document.getElementById('login-option').classList.remove('active');
             document.getElementById('registration-form').classList.add('active');
             document.getElementById('login-form').classList.remove('active');
-          });
-
-
-          document.getElementById('cancel-cross').addEventListener('click', function() {
+        });
+    
+        document.getElementById('cancel-cross').addEventListener('click', function() {
             document.getElementById('popup-box').style.display = 'none';
-          });
+        });
+    
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('registration-option').classList.add('active');
+            document.getElementById('login-option').classList.remove('active');
+            document.getElementById('registration-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+        });  
+       
+        if ("{{error_messages}}") {
+            var modal = document.getElementById("popup-box");
+            modal.classList.add("show-popup");
+            modal.style.display = "block";
+        } else {
+            document.getElementById('popup-box').classList.add('remove-popup');
+        }
+        
+            
+        
     </script>
+    
 
 </body>
     
