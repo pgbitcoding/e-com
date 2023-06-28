@@ -1,14 +1,28 @@
 import re
 from django.db.models import Q
-from .models import CustomUser
+from .models import CustomUser,Product,Category,Category_banner
 from django.contrib import messages
 from django.http import HttpResponse
+from django.db.models import Count
 from django.shortcuts import render,redirect
 from django.contrib.auth.hashers import check_password
 
+
 # Create your views here.
 def index(request):
-    return render(request,"index.html")
+    
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    category_banner = Category_banner.objects.all()
+    for banner in category_banner:
+        print(banner.picture)
+    zipped_data = zip(products, categories)
+    context = {'zipped_data': zipped_data}
+    extra_data = {"products": products, "categories": categories,"category_banner":category_banner} 
+    
+    context.update(extra_data)  
+
+    return render(request,"index.html",context)
 
 def shop(request):
     return render(request,"shop.html")
@@ -19,8 +33,10 @@ def contact(request):
 def shop_cart(request):
     return render(request,"shop-cart.html")
 
-def product_details(request):
-    return render(request,"product-details.html")
+def product_details(request,pk):
+    product = Product.objects.get(id=pk)
+    
+    return render(request,"product-details.html",{"product":product})
 
 def checkout(request):
     return render(request,"checkout.html")
