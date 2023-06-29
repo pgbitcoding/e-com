@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.db.models import Count
 from django.shortcuts import render,redirect
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -42,6 +44,9 @@ def product_details(request,pk):
 
 def checkout(request):
     return render(request,"checkout.html")
+
+def about(request):
+    return render(request,"about.html")
 
 def blog_details(request):
     return render(request,"blog-details.html")
@@ -136,7 +141,12 @@ def login(request):
         return render(request, 'index.html', context)
     return render(request, 'index.html')
         
-def watchlist(request,pk):
+        
+def custom_logout(request):
+    logout(request)
+    return redirect("index")
+    
+def watchlist_add(request,pk):
     watchlist = Watchlist()
     
     watchlist.product = Product.objects.get(pk=pk)
@@ -144,5 +154,9 @@ def watchlist(request,pk):
     watchlist.save()
     print("Watchlist.object------->",Watchlist.objects.all())
     
-    watchlist = Product.objects.all()
-    return render(request,"watchlist.html",{"watchlist" : watchlist})
+    return redirect('index')
+
+def watchlist(request):
+    watchlists = Watchlist.objects.filter(user=request.user).select_related("product")
+    print("watchlists", watchlists)
+    return render(request,"watchlist.html",{"watchlists":watchlists})

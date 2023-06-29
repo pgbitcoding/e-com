@@ -138,13 +138,21 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
+                        {% if request.user.is_authenticated %}
+                        <p>{{request.user}}</p>
+                        <div class="header__right__auth">
+                            <a href="{% url 'logout'  %}">Logout</a>
+                            <a href="{% url 'logout'  %}">Signoff</a>
+                        </div>
+                        {% else %}
                         <div class="header__right__auth">
                             <a href="#" id="login-link">Login</a>
                             <a href="#" id="login-link">Register</a>
                         </div>
+                        {% endif %}
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="#"><span class="icon_heart_alt"></span>
+                            <li><a href="{% url 'watchlist' %}"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
                             <li><a href="#"><span class="icon_bag_alt"></span>
@@ -248,9 +256,9 @@
                     <div class="footer__widget">
                         <h6>Quick links</h6>
                         <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Blogs</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="{% url 'about'  %}">About</a></li>
+                            <li><a href="{% url 'blog'  %}"></a></li>
+                            <li><a href="{% url 'contact'  %}">Contact</a></li>
                             <li><a href="#">FAQ</a></li>
                         </ul>
                     </div>
@@ -262,7 +270,7 @@
                             <li><a href="#">My Account</a></li>
                             <li><a href="#">Orders Tracking</a></li>
                             <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="watchlist">Wishlist</a></li>
                         </ul>
                     </div>
                 </div>

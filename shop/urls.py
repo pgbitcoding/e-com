@@ -30,7 +30,10 @@ urlpatterns = [
     path("blog",views.blog,name="blog"),
     path("registration",views.registration,name="registration"),
     path("login",views.login,name="login"),
-    path("watchlist/<int:pk>",views.watchlist,name="watchlist"),
+    path("watchlist_add/<int:pk>",views.watchlist_add,name="watchlist_add"),
+    path("watchlist",views.watchlist,name="watchlist"),
+    path("logout",views.custom_logout,name="logout"),
+    path("about",views.about,name="about"),
 ]
 
 if settings.DEBUG:
