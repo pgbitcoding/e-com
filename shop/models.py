@@ -85,3 +85,8 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - Quantity: {self.quantity}"
+
+class Watchlist(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    

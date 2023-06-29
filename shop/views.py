@@ -35,8 +35,10 @@ def shop_cart(request):
 
 def product_details(request,pk):
     product = Product.objects.get(id=pk)
+    print(product.category) 
+    related_products = Product.objects.filter(category = product.category)
     
-    return render(request,"product-details.html",{"product":product})
+    return render(request,"product-details.html",{"product":product,"related_products":related_products})
 
 def checkout(request):
     return render(request,"checkout.html")
@@ -134,3 +136,6 @@ def login(request):
         return render(request, 'index.html', context)
     return render(request, 'index.html')
         
+def watchlist(request):
+    watchlist = Product.objects.all()
+    return render(request,"watchlist.html",{"watchlist" : watchlist})

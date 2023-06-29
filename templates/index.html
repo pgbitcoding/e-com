@@ -70,8 +70,8 @@
             {% for product in products %}
             <div class="col-lg-3 col-md-4 col-sm-6 mix {{ product.category.name|get_category_class }}">
                 
-                <div class="product__item">
-                    <a href="{% url 'product_details' pk=product.id%}">
+                <a class="test" href="{% url 'product_details' pk=product.id%}" style="">
+                    <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ product.images.first.picture.url }}">
                             <div class="label new">New</div>
                             <ul class="product__hover">
@@ -89,10 +89,10 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                             </div>
-                            <div class="product__price">$ {{ product.price }}</div>
+                            <div class="product__price">$ {{ product.price|apply_discount }}<span>{{ product.price}}</span></div>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
             {% endfor %}
         </div>
