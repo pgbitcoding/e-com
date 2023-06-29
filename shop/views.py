@@ -1,6 +1,6 @@
 import re
 from django.db.models import Q
-from .models import CustomUser,Product,Category,Category_banner
+from .models import CustomUser,Product,Category,Category_banner, Watchlist
 from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Count
@@ -136,6 +136,13 @@ def login(request):
         return render(request, 'index.html', context)
     return render(request, 'index.html')
         
-def watchlist(request):
+def watchlist(request,pk):
+    watchlist = Watchlist()
+    
+    watchlist.product = Product.objects.get(pk=pk)
+    watchlist.user = request.user
+    watchlist.save()
+    print("Watchlist.object------->",Watchlist.objects.all())
+    
     watchlist = Product.objects.all()
     return render(request,"watchlist.html",{"watchlist" : watchlist})
