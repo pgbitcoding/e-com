@@ -32,8 +32,11 @@ urlpatterns = [
     path("login",views.login,name="login"),
     path("watchlist_add/<int:pk>",views.watchlist_add,name="watchlist_add"),
     path("watchlist",views.watchlist,name="watchlist"),
+    path("watchlist_remove/<str:product>",views.watchlist_remove,name="watchlist_remove"),
     path("logout",views.custom_logout,name="logout"),
     path("about",views.about,name="about"),
+    path("womens",views.womens,name="womens"),
+    path("mens",views.mens,name="mens"),
 ]
 
 if settings.DEBUG:

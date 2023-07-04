@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
-from .models import CustomUser, Cart, CartItem, Category, Product, Images, Category_banner, Watchlist
+from .models import CustomUser, Cart, CartItem, Category, Product, Images, Category_banner, Watchlist, Subcategory
+from .forms import ProductForm
 
 # Register your models here.
 
@@ -28,11 +29,17 @@ admin.site.register(Category,CategoryAdmin)
 class ImagesInline(admin.StackedInline):
     model = Images
     
+# class ProductAdmin(admin.ModelAdmin):
+
+#   list_display = ("name","price","available")
+# admin.site.register(Product,ProductAdmin)
+
+
 class ProductAdmin(admin.ModelAdmin):
   inlines = [ImagesInline]
+  form = ProductForm
 
-  list_display = ("category","name","price","available")
-admin.site.register(Product,ProductAdmin)
+admin.site.register(Product, ProductAdmin)
 
 
 class CartAdmin(admin.ModelAdmin):
@@ -50,4 +57,10 @@ admin.site.register(CartItem,CartItemAdmin )
 class WatchlistAdmin(admin.ModelAdmin):
   list_display = ("user","product")
   
-admin.site.register(Watchlist,WatchlistAdmin )
+admin.site.register(Watchlist,WatchlistAdmin)
+
+class SubcategoryAdmin(admin.ModelAdmin):
+  list_display = ("name",)
+    
+admin.site.register(Subcategory,SubcategoryAdmin)
+    

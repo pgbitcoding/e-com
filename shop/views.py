@@ -26,8 +26,20 @@ def index(request):
 
     return render(request,"index.html",context)
 
+def womens(request):
+    products = Product.objects.filter(category__name="Women’s fashion").select_related("category")
+    print("Products ----> ",products)
+    return render(request,"womens.html",{"products":products})
+
+def mens(request):
+    products = Product.objects.filter(category__name="Men’s fashion").select_related("category")
+    print("Products ----> ",products)
+    return render(request,"mens.html",{"products":products})
+
 def shop(request):
-    return render(request,"shop.html")
+    products = Product.objects.all().order_by("category")
+    
+    return render(request,"shop.html",{"products":products})
 
 def contact(request):
     return render(request,"contact.html")
@@ -156,7 +168,16 @@ def watchlist_add(request,pk):
     
     return redirect('index')
 
+def watchlist_remove(request,product):
+    # Watchlist.objects.get(watchlist.product = pk).delete()
+    print("----->",product) 
+    print(Watchlist.objects.filter(product__name=product))
+    Watchlist.objects.get(product__name = product).delete( )
+    # print(Watchlist.objects.get(product = product))
+    
+    return redirect("watchlist")
+
+@login_required
 def watchlist(request):
     watchlists = Watchlist.objects.filter(user=request.user).select_related("product")
-    print("watchlists", watchlists)
     return render(request,"watchlist.html",{"watchlists":watchlists})

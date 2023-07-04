@@ -120,29 +120,29 @@
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="#">Women’s</a></li>
-                            <li><a href="#">Men’s</a></li>
-                            <li><a href="{% url 'shop' %}">Shop</a></li>
-                            <li><a href="#">Pages</a>
+                            <li class="{% if request.path == '/' %} active {% endif %}"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="{% if request.path == '/womens' %} active {% endif %}"><a href="{% url 'womens' %}">Women’s</a></li>
+                            <li class="{% if request.path == '/mens' %} active {% endif %}"><a href="{% url 'mens' %}">Men’s</a></li>
+                            <li class="{% if request.path == '/shop' %} active {% endif %}"><a href="{% url 'shop' %}">Shop</a></li>
+                            <li class="{% if request.path == '/shop_cart' or request.path == '/checkout' or request.path == '/blog_details' %}active{% endif %}"><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="{% url 'shop_cart' %}">Shop Cart</a></li>
                                     <li><a href="{% url 'checkout' %}">Checkout</a></li>
                                     <li><a href="{% url 'blog_details' %}">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{% url 'blog'  %}">Blog</a></li>
-                            <li><a href="{% url 'contact'  %}">Contact</a></li>
+                            <li class="{% if request.path == '/blog' %} active {% endif %}"><a href="{% url 'blog'  %}">Blog</a></li>
+                            <li class="{% if request.path == '/contact' %} active {% endif %}"><a href="{% url 'contact'  %}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
+                
                 <div class="col-lg-3">
                     <div class="header__right">
                         {% if request.user.is_authenticated %}
                         <p>{{request.user}}</p>
                         <div class="header__right__auth">
                             <a href="{% url 'logout'  %}">Logout</a>
-                            <a href="{% url 'logout'  %}">Signoff</a>
                         </div>
                         {% else %}
                         <div class="header__right__auth">

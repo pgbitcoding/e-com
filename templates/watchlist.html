@@ -22,13 +22,15 @@
         {% if watchlists %}
             <ul class="row">
                 {% for watchlist in watchlists %}
+
                     <li class="col-md-4">
                         <div class="card">
-                            <img src="{{  watchlist.product.images.first.picture.url }}" alt="{{ product.name }}" class="card-img-top">
+                            <img src="{{  watchlist.product.images.first.picture.url }}" alt="{{ watchlist.product.name }}" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">{{ watchlist.product.name }}</h5>
                                 <p class="card-text price">Price: ${{ watchlist.product.price }}</p>
-                                <button class="btn btn-danger"><a href="#" class="remove-link" style="color:white">Remove</a></button>
+
+                                <button class="btn btn-danger"><a href="{% url 'watchlist_remove' product=watchlist.product %}" class="remove-link" style="color:white">Remove</a></button>
                             </div>
                         </div>
                     </li>
