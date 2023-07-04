@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="{% url 'index'  %}"><i class="fa fa-home"></i> Home</a>
+                    <a href="#">watchlist</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<div class="container">
+        
+    {% if wishlists %}
+        <ul class="row">
+            {% for wishlist in wishlists %}
+                <li class="col-md-4">
+                    <div class="card">
+                        <img src="{{ wishlist.product.images.first.picture.url }}" alt="{{ wishlists.product.name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ wishlist.product.name }}</h5>
+                            <p class="card-text price">Price: ${{ wishlists.product.price }}</p>
+                            <button class="btn btn-danger"><a href="{% url 'wishlist_remove' product = wishlist.product %}" class="remove-link" style="color:white">Remove</a></button>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3 mt-5">
+            <div class="alert alert-info text-center">
+              <h4>Your Watchlist list is empty.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+            
+    {% endif %}
+</div>
+    
+{% endblock main_content %}

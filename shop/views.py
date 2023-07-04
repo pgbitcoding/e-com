@@ -1,9 +1,7 @@
 import re
-from django.db.models import Q
-from .models import CustomUser,Product,Category,Category_banner, Watchlist
-from django.contrib import messages
+from django.db.models import Q , F
+from .models import CustomUser,Product,Category,Category_banner, Wishlist, Cart
 from django.http import HttpResponse
-from django.db.models import Count
 from django.shortcuts import render,redirect
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
@@ -12,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    
+
     products = Product.objects.all()
     categories = Category.objects.all()
     category_banner = Category_banner.objects.all()
@@ -45,7 +43,8 @@ def contact(request):
     return render(request,"contact.html")
 
 def shop_cart(request):
-    return render(request,"shop-cart.html")
+    carts = Cart.objects.filter(user = request.user)
+    return render(request,"shop-cart.html",{"carts":carts})
 
 def product_details(request,pk):
     product = Product.objects.get(id=pk)
@@ -158,26 +157,37 @@ def custom_logout(request):
     logout(request)
     return redirect("index")
     
-def watchlist_add(request,pk):
-    watchlist = Watchlist()
     
-    watchlist.product = Product.objects.get(pk=pk)
-    watchlist.user = request.user
-    watchlist.save()
-    print("Watchlist.object------->",Watchlist.objects.all())
+def wishlist_add(request,pk):
+    wishlist = Wishlist()
+    
+    wishlist.product = Product.objects.get(pk=pk)
+    wishlist.user = request.user
+    wishlist.save()
     
     return redirect('index')
 
-def watchlist_remove(request,product):
-    # Watchlist.objects.get(watchlist.product = pk).delete()
-    print("----->",product) 
-    print(Watchlist.objects.filter(product__name=product))
-    Watchlist.objects.get(product__name = product).delete( )
-    # print(Watchlist.objects.get(product = product))
+
+def wishlist_remove(request,product):
+    print(Wishlist.objects.filter(product__name=product))
+    Wishlist.objects.get(product__name = product).delete( )
     
-    return redirect("watchlist")
+    return redirect("wishlist")
+
 
 @login_required
-def watchlist(request):
-    watchlists = Watchlist.objects.filter(user=request.user).select_related("product")
-    return render(request,"watchlist.html",{"watchlists":watchlists})
+def wishlist(request):
+    wishlists = Wishlist.objects.filter(user=request.user).select_related("product")
+    return render(request,"wishlist.html",{"wishlists":wishlists})
+
+def add_cart(request,pk):
+    cart = Cart.objects.filter(user=request.user, product=pk).first()
+    if cart:
+        cart.quantity = F('quantity') + 1
+        cart.save()
+    else:
+        new_cart = Cart(user=request.user, product=pk, quantity=1)
+        new_cart.save()
+    return redirect('index')
+
+    

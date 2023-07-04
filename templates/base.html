@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load  tags %}
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -152,10 +153,10 @@
                         {% endif %}
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="{% url 'watchlist' %}"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
+                            <li><a href="{% url 'wishlist' %}"><span class="icon_heart_alt"></span>
+                                <div class="tip">{{ wishlist_count }}</div>
                             </a></li>
-                            <li><a href="#"><span class="icon_bag_alt"></span>
+                            <li><a href="{% url 'add_cart' %}"><span class="icon_bag_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
                         </ul>
@@ -270,7 +271,7 @@
                             <li><a href="#">My Account</a></li>
                             <li><a href="#">Orders Tracking</a></li>
                             <li><a href="#">Checkout</a></li>
-                            <li><a href="watchlist">Wishlist</a></li>
+                            <li><a href="watchlist">Watchlist</a></li>
                         </ul>
                     </div>
                 </div>

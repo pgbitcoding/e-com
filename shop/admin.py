@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
-from .models import CustomUser, Cart, CartItem, Category, Product, Images, Category_banner, Watchlist, Subcategory
+from .models import CustomUser, Category, Product, Images, Category_banner, Wishlist, Subcategory, Cart
 from .forms import ProductForm
 
 # Register your models here.
@@ -42,25 +42,18 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 
-class CartAdmin(admin.ModelAdmin):
-  list_display = ("user","created_at")
-  
-admin.site.register(Cart,CartAdmin)
-
-
-class CartItemAdmin(admin.ModelAdmin):
-  list_display = ("cart","product","quantity")
-  
-admin.site.register(CartItem,CartItemAdmin )
-
-
-class WatchlistAdmin(admin.ModelAdmin):
+class WishlistAdmin(admin.ModelAdmin):
   list_display = ("user","product")
   
-admin.site.register(Watchlist,WatchlistAdmin)
+admin.site.register(Wishlist,WishlistAdmin)
 
 class SubcategoryAdmin(admin.ModelAdmin):
   list_display = ("name",)
     
 admin.site.register(Subcategory,SubcategoryAdmin)
     
+class CartAdmin(admin.ModelAdmin):
+  list_display = ("user","product","quantity")
+  
+admin.site.register(Cart,CartAdmin)
+  

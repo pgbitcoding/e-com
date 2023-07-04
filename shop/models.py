@@ -68,7 +68,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     
-    def __str__(self):  
+    def __str__(self):
         return self.name
 
 class Images(models.Model):
@@ -78,28 +78,18 @@ class Images(models.Model):
         return self.picture.url
 
 
-class Cart(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='CartItem')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Cart for {self.user.username}"
-
-
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return f"{self.product.name} - Quantity: {self.quantity}"
-
-class Watchlist(models.Model):
+class Wishlist(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.product.name}"
+
+
+class Cart(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    user = models.ForeignKey("CustomUser",  on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
     
-    
+    def __str__(self):
+        return str(self.user)
